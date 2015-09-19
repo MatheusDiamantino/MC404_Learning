@@ -9,52 +9,35 @@
 #include <stdbool.h>
 #include <string.h>
 #include "bst.h"
+#include "reader.h"
+#include "typeEnum.h"
 
 #define MAXCHAR 4096
 
-bool isLabel (char command[]);
-
 int main (int argc, char* argv[]) {
+	type t;
 	// Labels found
 	treeNode *labels;
 	// Current memory position it's writting instructions
 	int memoryPosition = 0;
 	int lineCounter = 0;
 	// The instruction, comment, directive or label it reads
-	char command[MAXCHAR], instructionPos = 'E';
+	char input[MAXCHAR], instructionPos = 'E';
 	// File
 	FILE *fRead = fopen(argv[1], "r");
 
 	if(fRead) {
-		fscanf(fRead, "%s", command);
+		fscanf(fRead, "%s", input);
 
 		// Reads 'till the end of file' (first cicle)
 		while (!feof(fRead)) {
-
-			// Insert label if it finds one
-			if(isLabel(command)) {
-				labels = Insert(labels, memoryPosition, command, instructionPos);
-				}
-
-			}
-			fscanf(fRead, "%s", command);
+			t = identifyType(input);
+			printf("%d\n", t);
+			fscanf(fRead, "%s", input);
 		}
-
 	}
 
 	PrintInorder(labels);
 
 	return 0;
-}
-
-bool isLabel (char command[]) {
-	int i;
-	char c = ':';
-
-	for(i = 0; i < strlen(command); i ++) {
-		if(command[i] == c) {
-			return true;
-		}
-	}
-	return false;
 }

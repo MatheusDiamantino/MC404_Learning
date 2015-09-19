@@ -6,19 +6,10 @@ void penis(char l[]);
 
 int main () {
 
-  char c[] = "Hello";
-  char *v = malloc(sizeof(strlen(c)));
+  int x;
 
-  strcpy(v, c);
-  printf("%s\n", v);
-  penis(v);
+  scanf("%d", &x);
+  printf("%0x\n", x);
 
   return 0;
-}
-
-void penis(char l[]) {
-
-  printf("%s\n", l);
-
-  return;
 }

@@ -1,8 +1,14 @@
 #include <stdio.h>
 
-enum type {
+#ifndef typeEnum.h
+#define typeEnum.h
+
+typedef enum type {
   LABEL,
   INSTRUCTION,
   COMMENT,
-  DIRECTIVE
-};
+  DIRECTIVE,
+  ERROR
+} type;
+
+#endif
