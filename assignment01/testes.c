@@ -2,14 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-void penis(char l[]);
-
 int main () {
 
-  int x;
+  char input[100];
 
-  scanf("%d", &x);
-  printf("%0x\n", x);
+  scanf("%s", input);
+  printf("%s\n", input);
 
   return 0;
 }

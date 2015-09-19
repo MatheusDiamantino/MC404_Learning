@@ -14,8 +14,10 @@
 
 #define MAXCHAR 4096
 
+FILE *fRead;
+
 int main (int argc, char* argv[]) {
-	type t;
+	inputType t;
 	// Labels found
 	treeNode *labels;
 	// Current memory position it's writting instructions
@@ -24,7 +26,7 @@ int main (int argc, char* argv[]) {
 	// The instruction, comment, directive or label it reads
 	char input[MAXCHAR], instructionPos = 'E';
 	// File
-	FILE *fRead = fopen(argv[1], "r");
+	fRead = fopen(argv[1], "r");
 
 	if(fRead) {
 		fscanf(fRead, "%s", input);

@@ -7,7 +7,7 @@
 #ifndef reader.h
 #define reader.h
 
-type identifyType (char input[]);
+inputType identifyType (char input[]);
 bool containsChar (char input[], char c);
 bool isLabel (char input[]);
 bool isDirective (char input[]);

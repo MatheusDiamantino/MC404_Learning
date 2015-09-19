@@ -9,6 +9,6 @@ typedef enum type {
   COMMENT,
   DIRECTIVE,
   ERROR
-} type;
+} inputType;
 
 #endif
