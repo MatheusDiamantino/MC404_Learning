@@ -4,10 +4,10 @@
 
 int main () {
 
-  char input[100];
+  int s;
 
-  scanf("%s", input);
-  printf("%s\n", input);
+  scanf("%x", &s);
+  printf("%03d\n", s);
 
   return 0;
 }

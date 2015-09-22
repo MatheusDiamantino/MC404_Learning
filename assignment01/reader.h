@@ -4,13 +4,14 @@
 
 #include "typeEnum.h"
 
-#ifndef reader.h
-#define reader.h
+#pragma once
 
+void storeLabel(char input[]);
+void identifyDirective(char input[]);
+void identifyInstruction(char input[]);
+void reader(char input[]);
 inputType identifyType (char input[]);
 bool containsChar (char input[], char c);
 bool isLabel (char input[]);
 bool isDirective (char input[]);
 bool isComment (char input[]);
-
-#endif

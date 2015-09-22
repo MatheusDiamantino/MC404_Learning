@@ -3,24 +3,22 @@
 #include <string.h>
 #include <stdbool.h>
 #include "typeEnum.h"
+#include "readInput.h"
+#include "labelBST.h"
 
-void reader(char input[]) {
-  inputType type = identifyType(input);
+extern treeNode *labels;
+extern int memoryPosition;
+extern char instructionPos;
 
-  switch (type) {
-    case DIRECTIVE:
-      identifyDirective(input);
-      break;
-    case COMMENT:
-      readJunk();
-      break;
-    case LABEL:
-      storeLabel(input);
-      break;
-    case INSTRUCTION:
-      identifyInstruction(input);
-      break;
-  }
+void identifyDirective(input) {
+
+}
+
+void identifyInstruction(input) {
+
+}
+
+void storeLabel(input) {
 
 }
 
@@ -81,5 +79,28 @@ inputType identifyType (char input[]) {
   }
 
   return ERROR;
+
+}
+
+void reader(char input[]) {
+  inputType type;
+
+  type =  identifyType(input);
+
+  switch (type) {
+    case DIRECTIVE:
+      identifyDirective(input);
+      break;
+    case COMMENT:
+      readJunk();
+      break;
+    case LABEL:
+      // Store label found
+      Insert(labels, memoryPosition, input, instructionPos);
+      break;
+    case INSTRUCTION:
+      identifyInstruction(input);
+      break;
+  }
 
 }

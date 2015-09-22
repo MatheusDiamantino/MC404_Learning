@@ -8,23 +8,27 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "bst.h"
+
+#include "labelBST.h"
 #include "reader.h"
 #include "typeEnum.h"
+#include "instructionBST.h"
 
 #define MAXCHAR 4096
 
 FILE *fRead;
+treeNode *labels;
+int memoryPosition;
+char instructionPos;
+instructionTree *instruction;
 
 int main (int argc, char* argv[]) {
 	inputType t;
-	// Labels found
-	treeNode *labels;
-	// Current memory position it's writting instructions
-	int memoryPosition = 0;
+	memoryPosition = 0;
+	instructionPos = 'E';
 	int lineCounter = 0;
 	// The instruction, comment, directive or label it reads
-	char input[MAXCHAR], instructionPos = 'E';
+	char input[MAXCHAR];
 	// File
 	fRead = fopen(argv[1], "r");
 

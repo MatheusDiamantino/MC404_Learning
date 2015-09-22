@@ -15,10 +15,13 @@ void readJunk() {
 }
 
 char* readInput() {
-  char input[64], c;
+  char *input = malloc(64*sizeof(char)), c;
   int i = 0;
 
   fscanf(fRead, "%c", &c);
+
+  while(c == ' ') { fscanf(fRead, "%c", &c); }
+
   while(c != ' ' && c != '\n') {
     input[i] = c;
     i++;
@@ -30,10 +33,11 @@ char* readInput() {
 }
 
 char* readNumber() {
-  char input[11], c;
+  char *input = malloc(11*sizeof(char)), c;
   int i = 0;
 
   fscanf(fRead, "%c", &c);
+  while(c == ' ') { fscanf(fRead, "%c", &c); }
   fscanf(fRead, "%c", &c);
 
   while (c != '"') {

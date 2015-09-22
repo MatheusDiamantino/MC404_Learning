@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-#ifndef typeEnum.h
-#define typeEnum.h
+#pragma once
 
 typedef enum type {
   LABEL,
@@ -10,5 +9,3 @@ typedef enum type {
   DIRECTIVE,
   ERROR
 } inputType;
-
-#endif
