@@ -3,33 +3,7 @@
 #include <string.h>
 #include "labelBST.h"
 
-label_tree* FindMin(label_tree *node)
-{
-        if(node==NULL)
-        {
-                /* There is no element in the tree */
-                return NULL;
-        }
-        if(node->left) /* Go to the left sub tree to find the min element */
-                return FindMin(node->left);
-        else
-                return node;
-}
-label_tree* FindMax(label_tree *node)
-{
-        if(node==NULL)
-        {
-                /* There is no element in the tree */
-                return NULL;
-        }
-        if(node->right) /* Go to the left sub tree to find the min element */
-                FindMax(node->right);
-        else
-                return node;
-    return node;
-}
-
-label_tree * Insert(label_tree *node,int memPos, char label[], short int instruction)
+label_tree * Insert(label_tree *node,long int memPos, char label[], short int instruction)
 {
         if(node==NULL)
         {
@@ -78,37 +52,4 @@ label_tree * Find(label_tree *node, char label[])
                 /* Element Found */
                 return node;
         }
-}
-
-void PrintInorder(label_tree *node)
-{
-        if(node==NULL)
-        {
-                return;
-        }
-        PrintInorder(node->left);
-        printf("%d %s %c\n", node -> memPos, node -> label, node -> instruction );
-        PrintInorder(node->right);
-}
-
-void PrintPreorder(label_tree *node)
-{
-        if(node==NULL)
-        {
-                return;
-        }
-        printf("%d ",node->memPos);
-        PrintPreorder(node->left);
-        PrintPreorder(node->right);
-}
-
-void PrintPostorder(label_tree *node)
-{
-        if(node==NULL)
-        {
-                return;
-        }
-        PrintPostorder(node->left);
-        PrintPostorder(node->right);
-        printf("%d ",node->memPos);
 }

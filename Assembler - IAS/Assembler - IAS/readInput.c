@@ -4,83 +4,120 @@
 #include <stdbool.h>
 #include "readInput.h"
 
-extern FILE *fRead;
-extern int lineCounter;
+extern char     *line;
+extern FILE     *fRead;
+extern int      lineCounter;
 
 // Reads the rest of the line
 void read_junk() {
-  char c = ' ';
+    char *c = strtok(NULL, " ");
 
-  while(c != '\n') { c = fgetc(fRead); }
+    while(c != NULL) { c = strtok(NULL, " "); }
 
   return;
 }
 
 // Reads a generic input and return if it has reached the ond of a line or not
 bool read_input(char input[]) {
-    int line_break;
-    fscanf(fRead, "%s", input);
     
-    /* char c;
-    int i = 0;
-
-    c = fgetc(fRead);
-
-    while(c == ' ' || c == '\t') { c = fgetc(fRead); }
-
-    while(c != ' ' && c != '\n' && c != EOF && c != '\t' && i < strlen(input)) {
-        input[i] = c;
-        i++;
-        c = fgetc(fRead);
-    }
-    input[i] = '\0';*/
+    strcpy(input, strtok(NULL, " \t\n"));
+    return input != NULL;
     
-    line_break = fgetc(fRead);
-
-    if(line_break == '\n') return true;
-    else return false;
 }
 
-// Reads a number and returns if it has reached the end of a line or not (VERIFIES IF ITS NOT IN THE FORMAT SPECIFIED!!!!)
+/*
+ * Reads a number and returns if it has reached the end of a line or not (VERIFIES IF ITS NOT IN THE FORMAT SPECIFIED!!!!)
+ */
 bool read_number_generic(long long int *n) {
-    char *c, *str, *ptr = NULL;
-    int line_break;
+    char    *c,
+            *str,
+            *ptr = NULL;
     
-    fscanf(fRead, "%s", c);
-    str = strtok(c, "\"");
+    str = strtok(NULL, " \"\t\n");
     
-    *n = strtoll(str, &ptr, 0);
+    if(str == NULL) return false;
     
-    if(ptr != NULL) {
-        if(strlen(c) > 2 && c[0] == '0' && c[1] == 'x')
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number", lineCounter, str);
-        else
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number", lineCounter, str);
+    if(strlen(str) != 12 && str[1] == 'x') {
+        fprintf(stderr, "ERROR on line %d\n%s is not a 10 digit HEX number\n", lineCounter, str);
         exit(1);
     }
     
-    /* char c;
-    int i = 0, size = strlen(input);
-
-    fscanf(fRead, "%c", &c);
-    while(c == ' ') { fscanf(fRead, "%c", &c); }
-    fscanf(fRead, "%c", &c);
-
-    while (c != '"' && c != EOF && i < size) {
-        input[i] = c;
-        i++;
-        fscanf(fRead, "%c", &c);
+    *n = strtoll(str, &ptr, 0);
+    
+    if(strcmp(ptr, "\0")) {
+        if(strlen(c) > 2 && c[0] == '0' && c[1] == 'x')
+            fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number1\n", lineCounter, str);
+        else if (strlen(c) > 2 && c[1] != 'x')
+            fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number2\n", lineCounter, str);
+        exit(1);
     }
-    input[i] = '\0';*/
     
-    line_break = fgetc(fRead);
+    return true;
+}
+
+long long int convert_string_number(char input[]) {
+    char *ptr = NULL, *str;
+    long long int n;
+    str = strtok(input, "\"");
+    n = strtoll(input, &ptr, 0);
     
-    if(line_break == '\n') { lineCounter++; return true; }
-    else { return false; }
+    if(strcmp(ptr, "\0")) {
+        if(strlen(input) > 2 && input[0] == '0' && input[1] == 'x')
+            fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number3\n", lineCounter, input);
+        else if (strlen(input) > 2 && input[1] != 'x') {
+            printf("%c\n", input[1]);
+            fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number4\n", lineCounter, input);
+        }
+        exit(1);
+    }
     
+    return n;
 }
 
 void read_number(int *n) {
     fscanf(fRead, "%d", n);
     return;
+}
+
+char* format_output_HEX(long long int num) {
+    char hex[17], *aux = malloc(14 * sizeof(char));
+    
+    sprintf(hex, "%.10llx", num);
+    
+    aux[0] = hex[6];
+    aux[1] = hex[7];
+    aux[2] = ' ';
+    aux[3] = hex[8];
+    aux[4] = hex[9];
+    aux[5] = hex[10];
+    aux[6] = ' ';
+    aux[7] = hex[11];
+    aux[8] = hex[12];
+    aux[9] = ' ';
+    aux[10] = hex[13];
+    aux[11] = hex[14];
+    aux[12] = hex[15];
+    aux[13] = '\0';
+    
+    return aux;
+}
+
+char* format_output(long long int l_instr, long long int r_instr, long long int l_arg, long long int r_arg) {
+    char *aux, *str = malloc(14 * sizeof(char));
+    aux = str;
+    
+    sprintf(str, "%.2lld", l_instr);
+    str[2] = ' ';
+    str += 3;
+    sprintf(str, "%.3lld", l_arg);
+    str[3] = ' ';
+    str += 4;
+    sprintf(str, "%.2lld", r_instr);
+    str[2] = ' ';
+    str += 3;
+    sprintf(str, "%.3lld", r_arg);
+    aux[13] = '\0';
+    
+    return aux;
+    
 }

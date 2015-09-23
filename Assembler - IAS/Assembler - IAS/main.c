@@ -14,9 +14,14 @@
 #include "typeEnum.h"
 #include "instruction.h"
 #include "defines.h"
+#include "memory_map_BST.h"
+#include "treat_type.h"
 
+memory_word         word;
+char                line[MAXCHAR];
+memory_map_tree     *instr_tree;
 FILE                *fRead;
-label_tree          *labels;
+label_tree          *labels, *sym;
 short int           memoryPosition;
 short int           instructionPos;
 int                 lineCounter;
@@ -44,28 +49,45 @@ instruction         instruction_list[N_INSTR] = {
 };
 
 int main (int argc, char* argv[]) {
-	inputType t;
-	memoryPosition = 0;
-	instructionPos = LEFT;
-    lineCounter = 0;
+	memoryPosition  = 0;
+	instructionPos  = LEFT;
+    lineCounter     = 0;
+    instr_tree      = NULL;
+    labels          = NULL;
+    sym             = NULL;
 	// The instruction, comment, directive or label it reads
-	char input[MAXCHAR];
+	char            *input;
 	// File
-	fRead = fopen(argv[1], "r");
-
-	if(fRead) {
-		fscanf(fRead, "%s", input);
-
-		// Reads 'till the end of file (first cicle)
-		while (!feof(fRead)) {
-			t = identifyType(input);
-			fscanf(fRead, "%s", input);
-		}
-	}
+	fRead           = fopen(argv[1], "r");
     
-    printf("%s", instruction_list[0].mnemonic);
-
-	PrintInorder(labels);
+	if(fRead) {
+        
+		// Reads 'till the end of file (first cicle)
+		while (fgets(line, MAXCHAR, fRead) != NULL) {
+            input = strtok(line, " \t\n");
+            while (input != NULL) {
+                pre_process(input);
+                input = strtok(NULL, " \t\n");
+            }
+            lineCounter++;
+		}
+        rewind(fRead);
+        
+        memoryPosition  = 0;
+        instructionPos  = LEFT;
+        lineCounter     = 0;
+        
+        while (fgets(line, MAXCHAR, fRead) != NULL) {
+            input = strtok(line, " \t\n");
+            while (input != NULL) {
+                reader(input);
+                input = strtok(NULL, " \t\n");
+            }
+            lineCounter++;
+        }
+        
+        print_memory_map(instr_tree);
+	}
 
 	return 0;
 }

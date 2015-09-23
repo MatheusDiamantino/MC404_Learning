@@ -13,6 +13,6 @@
 #include "defines.h"
 
 void _change_position (short int new);
-void _increment();
+void _increment(bool is_word);
 
 #endif /* treat_MMP_h */

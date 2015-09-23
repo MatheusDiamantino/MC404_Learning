@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		9DF543F01BB173820063E521 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543EF1BB173820063E521 /* main.c */; };
 		9DF543FD1BB174420063E521 /* labelBST.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543F61BB174420063E521 /* labelBST.c */; settings = {ASSET_TAGS = (); }; };
-		9DF543FE1BB174420063E521 /* identifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543F81BB174420063E521 /* identifier.c */; settings = {ASSET_TAGS = (); }; };
 		9DF543FF1BB174420063E521 /* readInput.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543FA1BB174420063E521 /* readInput.c */; settings = {ASSET_TAGS = (); }; };
 		9DF544031BB182270063E521 /* treat_type.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544021BB182270063E521 /* treat_type.c */; settings = {ASSET_TAGS = (); }; };
 		9DF544071BB1B20C0063E521 /* treat_MMP.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544051BB1B20C0063E521 /* treat_MMP.c */; settings = {ASSET_TAGS = (); }; };
+		9DF5440B1BB2CE5B0063E521 /* memory_map_BST.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544091BB2CE5B0063E521 /* memory_map_BST.c */; settings = {ASSET_TAGS = (); }; };
+		9DF5440E1BB351680063E521 /* identifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF5440C1BB351680063E521 /* identifier.c */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,8 +33,6 @@
 		9DF543EF1BB173820063E521 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		9DF543F61BB174420063E521 /* labelBST.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = labelBST.c; sourceTree = "<group>"; };
 		9DF543F71BB174420063E521 /* labelBST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = labelBST.h; sourceTree = "<group>"; };
-		9DF543F81BB174420063E521 /* identifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = identifier.c; sourceTree = "<group>"; };
-		9DF543F91BB174420063E521 /* identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = identifier.h; sourceTree = "<group>"; };
 		9DF543FA1BB174420063E521 /* readInput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = readInput.c; sourceTree = "<group>"; };
 		9DF543FB1BB174420063E521 /* readInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readInput.h; sourceTree = "<group>"; };
 		9DF543FC1BB174420063E521 /* typeEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typeEnum.h; sourceTree = "<group>"; };
@@ -43,6 +42,10 @@
 		9DF544051BB1B20C0063E521 /* treat_MMP.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = treat_MMP.c; sourceTree = "<group>"; };
 		9DF544061BB1B20C0063E521 /* treat_MMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = treat_MMP.h; sourceTree = "<group>"; };
 		9DF544081BB1B2A90063E521 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		9DF544091BB2CE5B0063E521 /* memory_map_BST.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory_map_BST.c; sourceTree = "<group>"; };
+		9DF5440A1BB2CE5B0063E521 /* memory_map_BST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_map_BST.h; sourceTree = "<group>"; };
+		9DF5440C1BB351680063E521 /* identifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = identifier.c; sourceTree = "<group>"; };
+		9DF5440D1BB351680063E521 /* identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = identifier.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +81,6 @@
 				9DF544041BB182470063E521 /* treat_type.h */,
 				9DF543F61BB174420063E521 /* labelBST.c */,
 				9DF543F71BB174420063E521 /* labelBST.h */,
-				9DF543F81BB174420063E521 /* identifier.c */,
-				9DF543F91BB174420063E521 /* identifier.h */,
 				9DF543FA1BB174420063E521 /* readInput.c */,
 				9DF543FB1BB174420063E521 /* readInput.h */,
 				9DF543FC1BB174420063E521 /* typeEnum.h */,
@@ -89,6 +90,10 @@
 				9DF544051BB1B20C0063E521 /* treat_MMP.c */,
 				9DF544061BB1B20C0063E521 /* treat_MMP.h */,
 				9DF544081BB1B2A90063E521 /* defines.h */,
+				9DF544091BB2CE5B0063E521 /* memory_map_BST.c */,
+				9DF5440A1BB2CE5B0063E521 /* memory_map_BST.h */,
+				9DF5440C1BB351680063E521 /* identifier.c */,
+				9DF5440D1BB351680063E521 /* identifier.h */,
 			);
 			path = "Assembler - IAS";
 			sourceTree = "<group>";
@@ -151,9 +156,10 @@
 			files = (
 				9DF543FF1BB174420063E521 /* readInput.c in Sources */,
 				9DF543FD1BB174420063E521 /* labelBST.c in Sources */,
-				9DF543FE1BB174420063E521 /* identifier.c in Sources */,
+				9DF5440B1BB2CE5B0063E521 /* memory_map_BST.c in Sources */,
 				9DF544071BB1B20C0063E521 /* treat_MMP.c in Sources */,
 				9DF543F01BB173820063E521 /* main.c in Sources */,
+				9DF5440E1BB351680063E521 /* identifier.c in Sources */,
 				9DF544031BB182270063E521 /* treat_type.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
