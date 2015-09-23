@@ -5,6 +5,7 @@
 #include "readInput.h"
 
 extern FILE *fRead;
+extern int lineCounter;
 
 // Reads the rest of the line
 void read_junk() {
@@ -42,11 +43,22 @@ bool read_input(char input[]) {
 
 // Reads a number and returns if it has reached the end of a line or not (VERIFIES IF ITS NOT IN THE FORMAT SPECIFIED!!!!)
 bool read_number_generic(long long int *n) {
-    char *c, *str;
+    char *c, *str, *ptr = NULL;
     int line_break;
+    
     fscanf(fRead, "%s", c);
     str = strtok(c, "\"");
-    *n = strtoll(str, NULL, 0);
+    
+    *n = strtoll(str, &ptr, 0);
+    
+    if(ptr != NULL) {
+        if(strlen(c) > 2 && c[0] == '0' && c[1] == 'x')
+            fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number", lineCounter, str);
+        else
+            fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number", lineCounter, str);
+        exit(1);
+    }
+    
     /* char c;
     int i = 0, size = strlen(input);
 
@@ -62,8 +74,9 @@ bool read_number_generic(long long int *n) {
     input[i] = '\0';*/
     
     line_break = fgetc(fRead);
-    if(line_break == '\n') return true;
-    else return false;
+    
+    if(line_break == '\n') { lineCounter++; return true; }
+    else { return false; }
     
 }
 

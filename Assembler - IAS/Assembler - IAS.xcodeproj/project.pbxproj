@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9DF543F01BB173820063E521 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543EF1BB173820063E521 /* main.c */; };
 		9DF543FD1BB174420063E521 /* labelBST.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543F61BB174420063E521 /* labelBST.c */; settings = {ASSET_TAGS = (); }; };
-		9DF543FE1BB174420063E521 /* reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543F81BB174420063E521 /* reader.c */; settings = {ASSET_TAGS = (); }; };
+		9DF543FE1BB174420063E521 /* identifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543F81BB174420063E521 /* identifier.c */; settings = {ASSET_TAGS = (); }; };
 		9DF543FF1BB174420063E521 /* readInput.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF543FA1BB174420063E521 /* readInput.c */; settings = {ASSET_TAGS = (); }; };
 		9DF544031BB182270063E521 /* treat_type.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544021BB182270063E521 /* treat_type.c */; settings = {ASSET_TAGS = (); }; };
 		9DF544071BB1B20C0063E521 /* treat_MMP.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544051BB1B20C0063E521 /* treat_MMP.c */; settings = {ASSET_TAGS = (); }; };
@@ -32,8 +32,8 @@
 		9DF543EF1BB173820063E521 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		9DF543F61BB174420063E521 /* labelBST.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = labelBST.c; sourceTree = "<group>"; };
 		9DF543F71BB174420063E521 /* labelBST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = labelBST.h; sourceTree = "<group>"; };
-		9DF543F81BB174420063E521 /* reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = reader.c; sourceTree = "<group>"; };
-		9DF543F91BB174420063E521 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		9DF543F81BB174420063E521 /* identifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = identifier.c; sourceTree = "<group>"; };
+		9DF543F91BB174420063E521 /* identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = identifier.h; sourceTree = "<group>"; };
 		9DF543FA1BB174420063E521 /* readInput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = readInput.c; sourceTree = "<group>"; };
 		9DF543FB1BB174420063E521 /* readInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readInput.h; sourceTree = "<group>"; };
 		9DF543FC1BB174420063E521 /* typeEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typeEnum.h; sourceTree = "<group>"; };
@@ -78,8 +78,8 @@
 				9DF544041BB182470063E521 /* treat_type.h */,
 				9DF543F61BB174420063E521 /* labelBST.c */,
 				9DF543F71BB174420063E521 /* labelBST.h */,
-				9DF543F81BB174420063E521 /* reader.c */,
-				9DF543F91BB174420063E521 /* reader.h */,
+				9DF543F81BB174420063E521 /* identifier.c */,
+				9DF543F91BB174420063E521 /* identifier.h */,
 				9DF543FA1BB174420063E521 /* readInput.c */,
 				9DF543FB1BB174420063E521 /* readInput.h */,
 				9DF543FC1BB174420063E521 /* typeEnum.h */,
@@ -151,7 +151,7 @@
 			files = (
 				9DF543FF1BB174420063E521 /* readInput.c in Sources */,
 				9DF543FD1BB174420063E521 /* labelBST.c in Sources */,
-				9DF543FE1BB174420063E521 /* reader.c in Sources */,
+				9DF543FE1BB174420063E521 /* identifier.c in Sources */,
 				9DF544071BB1B20C0063E521 /* treat_MMP.c in Sources */,
 				9DF543F01BB173820063E521 /* main.c in Sources */,
 				9DF544031BB182270063E521 /* treat_type.c in Sources */,

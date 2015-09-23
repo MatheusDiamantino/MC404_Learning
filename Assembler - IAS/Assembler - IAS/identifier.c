@@ -7,10 +7,12 @@
 #include "readInput.h"
 #include "labelBST.h"
 #include "instruction.h"
+#include "identifier.h"
 
-extern treeNode *labels;
+extern label_tree *labels;
 extern int memoryPosition;
 extern short int instructionPos;
+extern int lineCounter;
 extern instruction instruction_list[20];
 
 void identifyDirective(char input[]) {
@@ -53,14 +55,20 @@ bool isInstruction(char input[]) {
 bool isLabel (char input[]) {
   int i;
   int size_str = strlen(input);
+    
+    if(input == NULL) { return false; }
 
   // Checks if it starts with a number
-  if(input[0] >= '0' && input[0] <= '9') { return false; }
+  if(input[0] >= '0' && input[0] <= '9') {
+      fprintf(stderr, "ERROR on line %d\n%s is not a valid label", lineCounter, input);
+      exit(1);
+  }
 
   // Checks if there's a colon in the middle of the input
   for(i = 0; i < size_str; i ++) {
   	if(input[i] == ':' && i != size_str - 1) {
-  		return false;
+        fprintf(stderr, "ERROR on line %d\n%s is not a valid label", lineCounter, input);
+        exit(1);
   	}
   }
 

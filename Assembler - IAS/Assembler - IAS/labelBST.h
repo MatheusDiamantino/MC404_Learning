@@ -2,24 +2,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct treeNode
+typedef struct label_tree
 {
         int memPos;
         char *label;
         short int instruction;
-        struct treeNode *left;
-        struct treeNode *right;
+        struct label_tree *left;
+        struct label_tree *right;
 
-}treeNode;
+}label_tree;
 
 #define LEFT 1
 #define RIGHT 0
 #define NONE 2
 
-treeNode* FindMin(treeNode *node);
-treeNode* FindMax(treeNode *node);
-treeNode * Insert(treeNode *node,int memPos, char label[], short int instruction);
-treeNode * Find(treeNode *node, char label[]);
-void PrintInorder(treeNode *node);
-void PrintPreorder(treeNode *node);
-void PrintPostorder(treeNode *node);
+label_tree* FindMin(label_tree *node);
+label_tree* FindMax(label_tree *node);
+label_tree * Insert(label_tree *node,int memPos, char label[], short int instruction);
+label_tree * Find(label_tree *node, char label[]);
+void PrintInorder(label_tree *node);
+void PrintPreorder(label_tree *node);
+void PrintPostorder(label_tree *node);

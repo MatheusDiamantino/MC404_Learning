@@ -3,7 +3,7 @@
 #include <string.h>
 #include "labelBST.h"
 
-treeNode* FindMin(treeNode *node)
+label_tree* FindMin(label_tree *node)
 {
         if(node==NULL)
         {
@@ -15,7 +15,7 @@ treeNode* FindMin(treeNode *node)
         else
                 return node;
 }
-treeNode* FindMax(treeNode *node)
+label_tree* FindMax(label_tree *node)
 {
         if(node==NULL)
         {
@@ -29,12 +29,12 @@ treeNode* FindMax(treeNode *node)
     return node;
 }
 
-treeNode * Insert(treeNode *node,int memPos, char label[], short int instruction)
+label_tree * Insert(label_tree *node,int memPos, char label[], short int instruction)
 {
         if(node==NULL)
         {
-                treeNode *temp;
-                temp = (treeNode *)malloc(sizeof(treeNode));
+                label_tree *temp;
+                temp = (label_tree *)malloc(sizeof(label_tree));
                 temp -> memPos = memPos;
                 temp -> label = malloc(sizeof(strlen(label)));
                 strcpy((temp -> label), label);
@@ -56,7 +56,7 @@ treeNode * Insert(treeNode *node,int memPos, char label[], short int instruction
 
 }
 
-treeNode * Find(treeNode *node, char label[])
+label_tree * Find(label_tree *node, char label[])
 {
         if(node==NULL)
         {
@@ -80,7 +80,7 @@ treeNode * Find(treeNode *node, char label[])
         }
 }
 
-void PrintInorder(treeNode *node)
+void PrintInorder(label_tree *node)
 {
         if(node==NULL)
         {
@@ -91,7 +91,7 @@ void PrintInorder(treeNode *node)
         PrintInorder(node->right);
 }
 
-void PrintPreorder(treeNode *node)
+void PrintPreorder(label_tree *node)
 {
         if(node==NULL)
         {
@@ -102,7 +102,7 @@ void PrintPreorder(treeNode *node)
         PrintPreorder(node->right);
 }
 
-void PrintPostorder(treeNode *node)
+void PrintPostorder(label_tree *node)
 {
         if(node==NULL)
         {

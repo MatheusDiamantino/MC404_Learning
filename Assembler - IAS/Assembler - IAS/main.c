@@ -10,17 +10,17 @@
 #include <string.h>
 
 #include "labelBST.h"
-#include "reader.h"
+#include "identifier.h"
 #include "typeEnum.h"
 #include "instruction.h"
 #include "defines.h"
 
-FILE *fRead;
-treeNode *labels;
-short int memoryPosition;
-short int instructionPos;
-int lineCounter;
-instruction instruction_list[N_INSTR] = {
+FILE                *fRead;
+label_tree          *labels;
+short int           memoryPosition;
+short int           instructionPos;
+int                 lineCounter;
+instruction         instruction_list[N_INSTR] = {
     {"LD\0", 1, NONE, true},
     {"LD-\0", 2, NONE, true},
     {"LD|\0", 3, NONE, true},
@@ -46,7 +46,7 @@ instruction instruction_list[N_INSTR] = {
 int main (int argc, char* argv[]) {
 	inputType t;
 	memoryPosition = 0;
-	instructionPos = 'E';
+	instructionPos = LEFT;
     lineCounter = 0;
 	// The instruction, comment, directive or label it reads
 	char input[MAXCHAR];
