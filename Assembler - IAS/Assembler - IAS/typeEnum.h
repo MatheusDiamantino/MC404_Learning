@@ -3,9 +3,10 @@
 #pragma once
 
 typedef enum type {
-  LABEL,
-  INSTRUCTION,
-  COMMENT,
-  DIRECTIVE,
-  ERROR
+    LABEL,
+    INSTRUCTION,
+    COMMENT,
+    DIRECTIVE,
+    ERROR,
+    NONE
 } inputType;

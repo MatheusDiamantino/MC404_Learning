@@ -1,0 +1,72 @@
+#!/bin/bash
+./main casos-de-teste/corretos/t0.txt casos-de-teste/corretos/t0.out
+diff casos-de-teste/corretos/t0.out casos-de-teste/corretos/t0.txt.hex
+
+./main casos-de-teste/corretos/t1.txt casos-de-teste/corretos/t1.out
+diff casos-de-teste/corretos/t1.out casos-de-teste/corretos/t1.txt.hex
+
+./main casos-de-teste/corretos/t2.txt casos-de-teste/corretos/t2.out
+diff casos-de-teste/corretos/t2.out casos-de-teste/corretos/t2.txt.hex
+
+./main casos-de-teste/corretos/t3.txt casos-de-teste/corretos/t3.out
+diff casos-de-teste/corretos/t3.out casos-de-teste/corretos/t3.txt.hex
+
+./main casos-de-teste/corretos/t4.txt casos-de-teste/corretos/t4.out
+diff casos-de-teste/corretos/t4.out casos-de-teste/corretos/t4.txt.hex
+
+./main casos-de-teste/corretos/t5.txt casos-de-teste/corretos/t5.out
+diff casos-de-teste/corretos/t5.out casos-de-teste/corretos/t5.txt.hex
+
+./main casos-de-teste/corretos/t6.txt casos-de-teste/corretos/t6.out
+diff casos-de-teste/corretos/t6.out casos-de-teste/corretos/t6.txt.hex
+
+./main casos-de-teste/corretos/t7.txt casos-de-teste/corretos/t7.out
+diff casos-de-teste/corretos/t7.out casos-de-teste/corretos/t7.txt.hex
+
+./main casos-de-teste/corretos/t8.txt casos-de-teste/corretos/t8.out
+diff casos-de-teste/corretos/t8.out casos-de-teste/corretos/t8.txt.hex
+
+./main casos-de-teste/corretos/t9.txt casos-de-teste/corretos/t9.out
+diff casos-de-teste/corretos/t9.out casos-de-teste/corretos/t9.txt.hex
+
+./main casos-de-teste/corretos/t10.txt casos-de-teste/corretos/t10.out
+diff casos-de-teste/corretos/t10.out casos-de-teste/corretos/t10.txt.hex
+
+./main casos-de-teste/corretos/t11.txt casos-de-teste/corretos/t11.out
+diff casos-de-teste/corretos/t11.out casos-de-teste/corretos/t11.txt.hex
+
+./main casos-de-teste/corretos/t12.txt casos-de-teste/corretos/t12.out
+diff casos-de-teste/corretos/t12.out casos-de-teste/corretos/t12.txt.hex
+
+./main casos-de-teste/corretos/t13.txt casos-de-teste/corretos/t13.out
+diff casos-de-teste/corretos/t13.out casos-de-teste/corretos/t13.txt.hex
+
+./main casos-de-teste/corretos/t14.txt casos-de-teste/corretos/t14.out
+diff casos-de-teste/corretos/t14.out casos-de-teste/corretos/t14.txt.hex
+
+./main casos-de-teste/corretos/t15.txt casos-de-teste/corretos/t15.out
+diff casos-de-teste/corretos/t15.out casos-de-teste/corretos/t15.txt.hex
+
+./main casos-de-teste/corretos/t16.txt casos-de-teste/corretos/t16.out
+diff casos-de-teste/corretos/t16.out casos-de-teste/corretos/t16.txt.hex
+
+./main casos-de-teste/corretos/t17.txt casos-de-teste/corretos/t17.out
+diff casos-de-teste/corretos/t17.out casos-de-teste/corretos/t17.txt.hex
+
+./main casos-de-teste/corretos/t18.txt casos-de-teste/corretos/t18.out
+diff casos-de-teste/corretos/t18.out casos-de-teste/corretos/t18.txt.hex
+
+./main casos-de-teste/corretos/t19.txt casos-de-teste/corretos/t19.out
+diff casos-de-teste/corretos/t19.out casos-de-teste/corretos/t19.txt.hex
+
+./main casos-de-teste/corretos/t20.txt casos-de-teste/corretos/t120.out
+diff casos-de-teste/corretos/t20.out casos-de-teste/corretos/t20.txt.hex
+
+./main casos-de-teste/corretos/21.txt casos-de-teste/corretos/t21.out
+diff casos-de-teste/corretos/t21.out casos-de-teste/corretos/t21.txt.hex
+
+./main casos-de-teste/corretos/t22.txt casos-de-teste/corretos/t22.out
+diff casos-de-teste/corretos/t22.out casos-de-teste/corretos/t22.txt.hex
+
+./main casos-de-teste/corretos/t23.txt casos-de-teste/corretos/t23.out
+diff casos-de-teste/corretos/t23.out casos-de-teste/corretos/t23.txt.hex

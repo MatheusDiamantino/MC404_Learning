@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "defines.h"
+
 typedef struct label_tree
 {
         long int memPos;
@@ -14,9 +16,6 @@ typedef struct label_tree
 
 }label_tree;
 
-#define LEFT 1
-#define RIGHT 0
-#define NONE 2
-
-label_tree * Insert(label_tree *node,long int memPos, char label[], short int instruction);
+label_tree * Insert(label_tree *node,long long int memPos, char label[], short int instruction);
 label_tree * Find(label_tree *node, char label[]);
+void print_labels (label_tree *node);

@@ -19,9 +19,15 @@ void read_junk() {
 
 // Reads a generic input and return if it has reached the ond of a line or not
 bool read_input(char input[]) {
-    
-    strcpy(input, strtok(NULL, " \t\n"));
-    return input != NULL;
+    char *str = strtok(NULL, " \t\n\"");
+    if(str != NULL) {
+        strcpy(input, str);
+        return true;
+    }
+    else {
+        input[0] = '\0';
+        return false;
+    }
     
 }
 
@@ -56,16 +62,14 @@ bool read_number_generic(long long int *n) {
 }
 
 long long int convert_string_number(char input[]) {
-    char *ptr = NULL, *str;
+    char *ptr = NULL;
     long long int n;
-    str = strtok(input, "\"");
     n = strtoll(input, &ptr, 0);
     
     if(strcmp(ptr, "\0")) {
         if(strlen(input) > 2 && input[0] == '0' && input[1] == 'x')
             fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number3\n", lineCounter, input);
         else if (strlen(input) > 2 && input[1] != 'x') {
-            printf("%c\n", input[1]);
             fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number4\n", lineCounter, input);
         }
         exit(1);
@@ -80,23 +84,24 @@ void read_number(int *n) {
 }
 
 char* format_output_HEX(long long int num) {
-    char hex[17], *aux = malloc(14 * sizeof(char));
+    char hex[18], *aux = malloc(14 * sizeof(char));
     
-    sprintf(hex, "%.10llx", num);
+    sprintf(hex, "%.17llx", num);
     
-    aux[0] = hex[6];
-    aux[1] = hex[7];
+    
+    aux[0] = hex[7];
+    aux[1] = hex[8];
     aux[2] = ' ';
-    aux[3] = hex[8];
-    aux[4] = hex[9];
-    aux[5] = hex[10];
+    aux[3] = hex[9];
+    aux[4] = hex[10];
+    aux[5] = hex[11];
     aux[6] = ' ';
-    aux[7] = hex[11];
-    aux[8] = hex[12];
+    aux[7] = hex[12];
+    aux[8] = hex[13];
     aux[9] = ' ';
-    aux[10] = hex[13];
-    aux[11] = hex[14];
-    aux[12] = hex[15];
+    aux[10] = hex[14];
+    aux[11] = hex[15];
+    aux[12] = hex[16];
     aux[13] = '\0';
     
     return aux;
@@ -106,16 +111,16 @@ char* format_output(long long int l_instr, long long int r_instr, long long int 
     char *aux, *str = malloc(14 * sizeof(char));
     aux = str;
     
-    sprintf(str, "%.2lld", l_instr);
+    sprintf(str, "%.2llx", l_instr);
     str[2] = ' ';
     str += 3;
-    sprintf(str, "%.3lld", l_arg);
+    sprintf(str, "%.3llx", l_arg);
     str[3] = ' ';
     str += 4;
-    sprintf(str, "%.2lld", r_instr);
+    sprintf(str, "%.2llx", r_instr);
     str[2] = ' ';
     str += 3;
-    sprintf(str, "%.3lld", r_arg);
+    sprintf(str, "%.3llx", r_arg);
     aux[13] = '\0';
     
     return aux;

@@ -3,7 +3,7 @@
 #include <string.h>
 #include "labelBST.h"
 
-label_tree * Insert(label_tree *node,long int memPos, char label[], short int instruction)
+label_tree * Insert(label_tree *node,long long int memPos, char label[], short int instruction)
 {
         if(node==NULL)
         {
@@ -52,4 +52,14 @@ label_tree * Find(label_tree *node, char label[])
                 /* Element Found */
                 return node;
         }
+}
+
+void print_labels (label_tree *node) {
+    
+    if(node != NULL) {
+        print_labels(node -> left);
+        printf("%0.3ld %s\n", node -> memPos, node -> label);
+        print_labels(node -> right);
+    }
+    
 }

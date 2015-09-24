@@ -19,11 +19,12 @@
 #include "treat_type.h"
 #include "treat_MMP.h"
 
-extern label_tree *labels;
-extern short int memoryPosition;
-extern short int instructionPos;
-extern int lineCounter;
-extern instruction instruction_list[20];
+extern inputType        type;
+extern                  label_tree *labels;
+extern short int        memoryPosition;
+extern short int        instructionPos;
+extern int              lineCounter;
+extern instruction      instruction_list[20];
 
 bool containsChar (char input[], char c) {
     int i;
@@ -45,6 +46,14 @@ bool isInstruction(char input[]) {
         if(!strcmp(input, instruction_list[i].mnemonic))
             return true;
     }
+    
+    /***********************************/
+    // Error treatment
+    
+    fprintf(stderr, "ERROR on line %d\n%s is not a valid instruction!\n", lineCounter, input);
+    exit(1);
+    
+    /***********************************/
     
     return false;
 }
@@ -90,17 +99,13 @@ bool isComment (char input[]) {
 inputType identifyType (char input[]) {
     
     if (isDirective(input)) {
+        
         return DIRECTIVE;
     } else if (isLabel(input)) {
         return LABEL;
     } else if (isComment(input)) {
         return COMMENT;
     } else  if(isInstruction(input)){
-        if(instructionPos == RIGHT) {
-            instructionPos = LEFT;
-            memoryPosition++;
-        } else instructionPos = RIGHT;
-        
         return INSTRUCTION;
     }
     
@@ -109,11 +114,12 @@ inputType identifyType (char input[]) {
 }
 
 void reader(char input[]) {
-    inputType type;
+    inputType t;
     
-    type =  identifyType(input);
+    t =  identifyType(input);
+    verify_order(t);
     
-    switch (type) {
+    switch (t) {
         case DIRECTIVE:
             treat_directive(input);
             break;
@@ -121,25 +127,45 @@ void reader(char input[]) {
             treat_comment(input);
             break;
         case LABEL:
-            treat_label(input);
+            //treat_label(input);
             break;
         case INSTRUCTION:
             treat_instruction(input);
             break;
         case ERROR:
             break;
+        case NONE:
+            break;
     }
     
 }
 void pre_process(char input[]) {
-    inputType type = identifyType(input);
-    switch (type) {
+    inputType t = identifyType(input);
+    switch (t) {
         case DIRECTIVE:
+            
             if(!strcmp(input, ".word")) memoryPosition++;
             if(!strcmp(input, ".wfill")) {
-                int n;
-                read_number(&n);
+                long long int n;
+                read_number_generic(&n);
                 memoryPosition += n;
+            }
+            if(!strcmp(input, ".align")) {
+                long long int n;
+                read_number_generic(&n);
+                
+                if(instructionPos == LEFT) {
+                    while(memoryPosition % n) { _increment(true); }
+                } else {
+                    
+                    _increment(false);
+                    while(memoryPosition % n) { _increment(true); }
+                }
+            }
+            if(!strcmp(input, ".org")) {
+                long long int n;
+                read_number_generic(&n);
+                memoryPosition = n;
             }
             read_junk();
             break;
@@ -147,13 +173,44 @@ void pre_process(char input[]) {
             treat_comment(input);
             break;
         case LABEL:
+            
             treat_label(input);
             break;
         case INSTRUCTION:
             read_junk();
-            memoryPosition++;
+            _increment(false);
             break;
         case ERROR:
             break;
+        case NONE:
+            break;
     }
+}
+
+void verify_order(inputType t) {
+    
+    if(type == NONE) {
+        type = t;
+        return;
+    }
+    
+    if(type == INSTRUCTION) {
+        if(t != COMMENT) {
+            fprintf(stderr, "ERROR on line %d\nOnly comments can go after instructions!\n", lineCounter);
+            exit(1);
+        }
+    } else if(type == DIRECTIVE) {
+        if(t != COMMENT) {
+            fprintf(stderr, "ERROR on line %d\nOnly comments can go after directives!\n", lineCounter);
+            exit(1);
+        }
+    } else if(type == LABEL){
+        if(t == LABEL) {
+            fprintf(stderr, "ERROR on line %d\nCannot have more than one label on a line!\n", lineCounter);
+            exit(1);
+        }
+    }
+    
+    type = t;
+    
 }

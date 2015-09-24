@@ -29,6 +29,7 @@ bool isComment (char input[]);
 inputType identifyType (char input[]);
 void reader(char input[]);
 void pre_process(char input[]);
+void verify_order(inputType t);
 
 
 #endif /* identifier_h */

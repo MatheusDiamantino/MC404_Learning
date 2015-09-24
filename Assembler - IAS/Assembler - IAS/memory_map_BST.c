@@ -10,16 +10,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "memory_map_BST.h"
 
-memory_map_tree * insert_memory_map(memory_map_tree *node,int memory_position, char word[])
+memory_map_tree * insert_memory_map(memory_map_tree *node,int memory_position, char *word)
 {
+    int i = 0;
     if(node==NULL)
     {
         memory_map_tree *temp;
         temp = (memory_map_tree *)malloc(sizeof(memory_map_tree));
         temp -> memory_position = memory_position;
+        
+        while(word[i])
+        {
+            
+            word[i] = toupper(word[i]);
+            i++;
+        }
+        
         strcpy(temp -> word, word);
         temp -> left = temp -> right = NULL;
         return temp;
@@ -66,8 +76,18 @@ void print_memory_map (memory_map_tree *node) {
     
     if(node != NULL) {
         print_memory_map(node -> left);
-        printf("%d %s\n", node -> memory_position, node -> word);
+        printf("%0.3X %s\n", node -> memory_position, node -> word);
         print_memory_map(node -> right);
+    }
+    
+}
+
+void print_memory_map_FILE (memory_map_tree *node, FILE* f) {
+    
+    if(node != NULL) {
+        print_memory_map_FILE(node -> left, f);
+        fprintf(f, "%0.3X %s\n", node -> memory_position, node -> word);
+        print_memory_map_FILE(node -> right, f);
     }
     
 }

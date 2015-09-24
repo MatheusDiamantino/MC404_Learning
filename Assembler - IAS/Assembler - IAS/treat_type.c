@@ -31,8 +31,8 @@ extern int                      lineCounter;
  * Take off the colon of the label and store it
  */
 void treat_label(char input[]) {
-    char *str = strtok(input, ":");
-    Insert(labels, memoryPosition, str, instructionPos);
+    input[strlen(input) - 1] = '\0';
+    labels = Insert(labels, memoryPosition, input, instructionPos);
     return;
 }
 
@@ -61,7 +61,7 @@ void treat_directive(char input[]) {
             exit(1);
         }
         
-        Insert(sym, num, symbol, -1);
+        sym = Insert(sym, num, symbol, -1);
     } else if (!strcmp(input, ".word")){
         
         /***********************************/
@@ -79,7 +79,7 @@ void treat_directive(char input[]) {
         read_input(str);
         label_tree *node = NULL;
         
-        if(isLabel(str)) { node = Find(labels, str); }
+        if(isLabel(str)) { str[strlen(str) - 1] = '\0'; node = Find(labels, str); }
         
         if(node != NULL) { instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output_HEX(node -> memPos)); }
         else {
@@ -93,7 +93,7 @@ void treat_directive(char input[]) {
         _increment(true);
         
     } else if (!strcmp(input, ".wfill")) {
-        short int memory_used;
+        long long int memory_used;
         char num[MAXROT];
         int i = 0;
         
@@ -107,7 +107,8 @@ void treat_directive(char input[]) {
         
         /***********************************/
         
-        read_number((int*)&memory_used);
+        read_input(num);
+        memory_used = convert_string_number(num);
         
         /***********************************/
         // Error treatment
@@ -125,7 +126,7 @@ void treat_directive(char input[]) {
         label_tree *node = NULL;
         long long int mem_pos;
         
-        if(isLabel(num)) { node = Find(labels, num); }
+        if(isLabel(num)) { num[strlen(num) - 1] = '\0'; node = Find(labels, num); }
         
         if(node != NULL) { mem_pos = node -> memPos; }
         else {
@@ -139,14 +140,17 @@ void treat_directive(char input[]) {
         
         for (i = 0; i < memory_used; i++) {
             instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output_HEX(mem_pos));
+            
             _increment(true);
         }
         
         
         
     } else if (!strcmp(input, ".align")) {
-        short int multiple;
-        read_number((int*)&multiple);
+        long long int multiple;
+        char str[MAXCHAR];
+        read_input(str);
+        multiple = convert_string_number(str);
         
         /***********************************/
         // Error treatment
@@ -163,6 +167,10 @@ void treat_directive(char input[]) {
         if(instructionPos == LEFT) {
             while(memoryPosition % multiple) { _increment(true); }
         } else {
+            word.right_argument = 0;
+            word.right_instruction = 0;
+            instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output(word.left_instruction, word.right_instruction, word.left_argument, word.right_argument));
+            
             _increment(false);
             while(memoryPosition % multiple) { _increment(true); }
         }
@@ -182,7 +190,15 @@ void treat_directive(char input[]) {
         
         /***********************************/
         
-        memoryPosition = (short int)num;
+        
+        
+        if(instructionPos == RIGHT) {
+            word.right_argument = 0;
+            word.right_instruction = 0;
+            instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output(word.left_instruction, word.right_instruction, word.left_argument, word.right_argument));
+            _increment(false);
+        }
+        memoryPosition = (int)num;
     }
 
 }
@@ -194,24 +210,25 @@ void treat_instruction(char input[]) {
     
     word.word = -1;
     
-    // Finding the instruction requestes (Jesus, it's messy ....)
+    // Finding the instruction requests (Jesus, it's messy ....)
     for(i = 0; i < N_INSTR; i++) {
         if(!strcmp(instruction_list[i].mnemonic, input)) {
             if(instruction_list[i].expect_argument) {
                 next_argument = read_input(arg);
-            
-                if(isLabel(arg)) {
-                    label = Find(labels, arg);
                 
-                    /***********************************/
-                    // Error treatment
+                label = Find(labels, arg);
                 
-                    if(label == NULL) {
-                        fprintf(stderr, "ERROR on line %d\n %s is not a label \n", lineCounter, arg);
-                        exit(1);
-                    }
+                /***********************************/
+                // Error treatment
                 
-                    /***********************************/
+               /* if(label == NULL) {
+                    fprintf(stderr, "ERROR on line %d\n %s is not a label \n", lineCounter, arg);
+                    exit(1);
+                }*/
+                
+                /***********************************/
+                
+                if(label != NULL) {
                     
                     if(label -> instruction == RIGHT && instruction_list[i].lr_instr != NONE) {
                         if(instructionPos == LEFT) {
@@ -222,8 +239,8 @@ void treat_instruction(char input[]) {
                             word.right_instruction = instruction_list[i + 1].code;
                         }
                     } else {
+                        
                         if(instructionPos == LEFT) {
-                            
                             word.left_argument = label -> memPos;
                             word.left_instruction = instruction_list[i].code;
                             
@@ -241,10 +258,10 @@ void treat_instruction(char input[]) {
                         word.left_argument = convert_string_number(arg);
                         word.left_instruction = instruction_list[i].code;
                     } else if(instructionPos == RIGHT) {
+                        
                         word.right_argument = convert_string_number(arg);
                         word.right_instruction = instruction_list[i].code;
                         
-                        /* CONVERT TO STRING */
                     }
                 }
             } else {
@@ -252,24 +269,32 @@ void treat_instruction(char input[]) {
                 /*
                  * ERROR: In case the program is providing argument for a non-argument instruction
                  */
+                
                 char str[MAXCHAR];
+                
                 if(read_input(str) && !isComment(str)) {
                     fprintf(stderr, "ERROR on line %d\n%s shoud not receive argument!\n", lineCounter, input);
                     exit(1);
                 }
                 
                 if(instructionPos == LEFT) {
+                    
                     word.left_instruction = instruction_list[i].code;
                     word.left_argument = 0;
                 } else if(instructionPos == RIGHT) {
-                    word.left_instruction = instruction_list[i].code;
-                    word.left_argument = 0;
+                    
+                    word.right_instruction = instruction_list[i].code;
+                    word.right_argument = 0;
                 }
                 
             }
             
             if(instructionPos == RIGHT) {
                 instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output(word.left_instruction, word.right_instruction, word.left_argument, word.right_argument));
+                word.left_argument = -1;
+                word.left_instruction = -1;
+                word.right_argument = -1;
+                word.right_instruction = -1;
             }
             
             _increment(false);

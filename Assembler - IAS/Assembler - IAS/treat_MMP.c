@@ -16,6 +16,7 @@ extern short int memoryPosition;
 extern short int instructionPos;
 
 void _increment(bool is_word) {
+    
     if(!is_word) {
         if(instructionPos == LEFT) instructionPos = RIGHT;
         else {

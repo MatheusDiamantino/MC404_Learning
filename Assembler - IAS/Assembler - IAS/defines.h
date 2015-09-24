@@ -9,7 +9,6 @@
 #ifndef defines_h
 #define defines_h
 
-#define NONE 2
 #define LEFT 1
 #define RIGHT 0
 #define N_INSTR 20

@@ -17,12 +17,13 @@
 #include "memory_map_BST.h"
 #include "treat_type.h"
 
+inputType           type;
 memory_word         word;
 char                line[MAXCHAR];
 memory_map_tree     *instr_tree;
 FILE                *fRead;
 label_tree          *labels, *sym;
-short int           memoryPosition;
+int                 memoryPosition;
 short int           instructionPos;
 int                 lineCounter;
 instruction         instruction_list[N_INSTR] = {
@@ -35,30 +36,33 @@ instruction         instruction_list[N_INSTR] = {
     {"JMP", 13, LEFT, true},
     {"JMP", 14, RIGHT, true},
     {"JUMP+", 15, LEFT, true},
-    {"JMP+", 16, RIGHT, true},
+    {"JUMP+", 16, RIGHT, true},
     {"ADD", 5, NONE, true},
     {"ADD|", 7, NONE, true},
     {"SUB", 6, NONE, true},
     {"SUB|", 8, NONE, true},
     {"MUL", 11, NONE, true},
-    {"DIF", 12, NONE, true},
-    {"LSH", 14, NONE, false},
-    {"RSH", 15, NONE, false},
-    {"STaddr", 12, LEFT, true},
-    {"STaddr", 13, RIGHT, true},
+    {"DIV", 12, NONE, true},
+    {"LSH\0", 20, NONE, false},
+    {"RSH\0", 21, NONE, false},
+    {"STaddr", 18, LEFT, true},
+    {"STaddr", 19, RIGHT, true},
 };
 
 int main (int argc, char* argv[]) {
-	memoryPosition  = 0;
-	instructionPos  = LEFT;
-    lineCounter     = 0;
-    instr_tree      = NULL;
-    labels          = NULL;
-    sym             = NULL;
-	// The instruction, comment, directive or label it reads
-	char            *input;
-	// File
-	fRead           = fopen(argv[1], "r");
+    type                            = NONE;
+	memoryPosition                  = 0;
+	instructionPos                  = LEFT;
+    lineCounter                     = 0;
+    instr_tree                      = NULL;
+    labels                          = NULL;
+    sym                             = NULL;
+    word.left_instruction           = -1;
+    word.left_argument              = -1;
+    word.right_instruction          = -1;
+    word.right_argument             = -1;
+	fRead                           = fopen(argv[1], "r");
+    char                            *input;
     
 	if(fRead) {
         
@@ -69,6 +73,7 @@ int main (int argc, char* argv[]) {
                 pre_process(input);
                 input = strtok(NULL, " \t\n");
             }
+            type = NONE;
             lineCounter++;
 		}
         rewind(fRead);
@@ -83,11 +88,23 @@ int main (int argc, char* argv[]) {
                 reader(input);
                 input = strtok(NULL, " \t\n");
             }
+            type = NONE;
             lineCounter++;
         }
         
-        print_memory_map(instr_tree);
+        if(word.right_instruction == -1 && word.left_instruction != -1) {
+            word.right_argument = 0;
+            word.right_instruction = 0;
+            instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output(word.left_instruction, word.right_instruction, word.left_argument, word.right_argument));
+        }
+        if(argv[2] != NULL) {
+            FILE* fWrite = fopen(argv[2], "w");
+            print_memory_map_FILE(instr_tree, fWrite);
+            fclose(fWrite);
+        } else
+            print_memory_map(instr_tree);
 	}
 
+    fclose(fRead);
 	return 0;
 }
