@@ -3,6 +3,12 @@
 #include <string.h>
 #include "labelBST.h"
 
+
+/* --------------------------------------------------
+ *
+ * Inserts a new node inside tree
+ *
+ * ------------------------------------------------- */
 label_tree * Insert(label_tree *node,long long int memPos, char label[], short int instruction)
 {
         if(node==NULL)
@@ -30,6 +36,11 @@ label_tree * Insert(label_tree *node,long long int memPos, char label[], short i
 
 }
 
+/* --------------------------------------------------
+ *
+ * Finds node in the tree
+ *
+ * ------------------------------------------------- */
 label_tree * Find(label_tree *node, char label[])
 {
         if(node==NULL)
@@ -54,6 +65,12 @@ label_tree * Find(label_tree *node, char label[])
         }
 }
 
+
+/* --------------------------------------------------
+ *
+ * Print labels in crescent order
+ *
+ * ------------------------------------------------- */
 void print_labels (label_tree *node) {
     
     if(node != NULL) {

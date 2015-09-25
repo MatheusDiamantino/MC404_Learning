@@ -2,13 +2,19 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "readInput.h"
+#include "treat_error.h"
 
 extern char     *line;
 extern FILE     *fRead;
 extern int      lineCounter;
 
-// Reads the rest of the line
+/* --------------------------------------------------
+ *
+ * Read rest of the line
+ *
+ * ------------------------------------------------- */
 void read_junk() {
     char *c = strtok(NULL, " ");
 
@@ -17,9 +23,17 @@ void read_junk() {
   return;
 }
 
-// Reads a generic input and return if it has reached the ond of a line or not
+/* --------------------------------------------------
+ *
+ * Reads a generic input and returns whether it has 
+ * next input or not
+ *
+ * ------------------------------------------------- */
 bool read_input(char input[]) {
     char *str = strtok(NULL, " \t\n\"");
+    
+    _error_not_10_digit_HEX_number(str);        // In case input is a HEX not valid
+    
     if(str != NULL) {
         strcpy(input, str);
         return true;
@@ -31,58 +45,71 @@ bool read_input(char input[]) {
     
 }
 
-/*
- * Reads a number and returns if it has reached the end of a line or not (VERIFIES IF ITS NOT IN THE FORMAT SPECIFIED!!!!)
- */
+/* --------------------------------------------------
+ *
+ * Reads either a HEX or DEC number and returns if succeeded
+ *
+ * ------------------------------------------------- */
 bool read_number_generic(long long int *n) {
-    char    *c,
-            *str,
+    char    *str,
             *ptr = NULL;
     
     str = strtok(NULL, " \"\t\n");
     
     if(str == NULL) return false;
     
-    if(strlen(str) != 12 && str[1] == 'x') {
-        fprintf(stderr, "ERROR on line %d\n%s is not a 10 digit HEX number\n", lineCounter, str);
-        exit(1);
-    }
+    _error_not_10_digit_HEX_number(str);                // Verifies if it's a valid 10 digit HEX
     
     *n = strtoll(str, &ptr, 0);
     
     if(strcmp(ptr, "\0")) {
-        if(strlen(c) > 2 && c[0] == '0' && c[1] == 'x')
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number1\n", lineCounter, str);
-        else if (strlen(c) > 2 && c[1] != 'x')
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number2\n", lineCounter, str);
-        exit(1);
+        
+        _error_not_valid_number(str);                   // It's not a valid number
+        
     }
     
     return true;
 }
 
+/* --------------------------------------------------
+ *
+ * Transform a string input into a long long int number
+ *
+ * ------------------------------------------------- */
 long long int convert_string_number(char input[]) {
-    char *ptr = NULL;
-    long long int n;
+    char                *ptr = NULL;
+    long long int       n;
+    
     n = strtoll(input, &ptr, 0);
     
-    if(strcmp(ptr, "\0")) {
-        if(strlen(input) > 2 && input[0] == '0' && input[1] == 'x')
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid HEX number3\n", lineCounter, input);
-        else if (strlen(input) > 2 && input[1] != 'x') {
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid DEC number4\n", lineCounter, input);
-        }
-        exit(1);
+    if(strcmp(ptr, "\0")) {                             // Func strtoll returned a pointer that's not the end of array given
+        
+        _error_not_valid_number(input);                 // It's not a valid number
+        
     }
     
     return n;
 }
 
-void read_number(int *n) {
-    fscanf(fRead, "%d", n);
-    return;
+/* --------------------------------------------------
+ *
+ * Verifies if string given is a number
+ *
+ * ------------------------------------------------- */
+bool string_is_number(char *input) {
+    char *ptr = NULL;
+    
+    strtoll(input, &ptr, 0);
+    
+    return !strcmp(ptr, "\0");
 }
 
+
+/* --------------------------------------------------
+ *
+ * Receives a number and returns it in the string output format
+ *
+ * ------------------------------------------------- */
 char* format_output_HEX(long long int num) {
     char hex[18], *aux = malloc(14 * sizeof(char));
     
@@ -107,6 +134,12 @@ char* format_output_HEX(long long int num) {
     return aux;
 }
 
+
+/* --------------------------------------------------
+ *
+ * Receives instructions and arguments and formats into output string
+ *
+ * ------------------------------------------------- */
 char* format_output(long long int l_instr, long long int r_instr, long long int l_arg, long long int r_arg) {
     char *aux, *str = malloc(14 * sizeof(char));
     aux = str;

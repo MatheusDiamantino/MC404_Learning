@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+bool string_is_number(char *input);
 void read_junk();
-void read_number(int *n);
 bool read_input(char input[]);
 long long int convert_string_number(char input[]);
 bool read_number_generic(long long int *n);

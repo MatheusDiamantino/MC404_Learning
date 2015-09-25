@@ -21,7 +21,6 @@
 #include "memory_map_BST.h"
 
 typedef struct memory_word {
-    long long int word;
     long long int left_instruction, left_argument;
     long long int right_instruction, right_argument;
 }memory_word;

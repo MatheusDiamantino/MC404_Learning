@@ -14,6 +14,7 @@
 		9DF544071BB1B20C0063E521 /* treat_MMP.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544051BB1B20C0063E521 /* treat_MMP.c */; settings = {ASSET_TAGS = (); }; };
 		9DF5440B1BB2CE5B0063E521 /* memory_map_BST.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF544091BB2CE5B0063E521 /* memory_map_BST.c */; settings = {ASSET_TAGS = (); }; };
 		9DF5440E1BB351680063E521 /* identifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF5440C1BB351680063E521 /* identifier.c */; settings = {ASSET_TAGS = (); }; };
+		9DF544111BB5EB140063E521 /* treat_error.c in Sources */ = {isa = PBXBuildFile; fileRef = 9DF5440F1BB5EB140063E521 /* treat_error.c */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,8 @@
 		9DF5440A1BB2CE5B0063E521 /* memory_map_BST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_map_BST.h; sourceTree = "<group>"; };
 		9DF5440C1BB351680063E521 /* identifier.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = identifier.c; sourceTree = "<group>"; };
 		9DF5440D1BB351680063E521 /* identifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = identifier.h; sourceTree = "<group>"; };
+		9DF5440F1BB5EB140063E521 /* treat_error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = treat_error.c; sourceTree = "<group>"; };
+		9DF544101BB5EB140063E521 /* treat_error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = treat_error.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,8 @@
 				9DF5440A1BB2CE5B0063E521 /* memory_map_BST.h */,
 				9DF5440C1BB351680063E521 /* identifier.c */,
 				9DF5440D1BB351680063E521 /* identifier.h */,
+				9DF5440F1BB5EB140063E521 /* treat_error.c */,
+				9DF544101BB5EB140063E521 /* treat_error.h */,
 			);
 			path = "Assembler - IAS";
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				9DF543F01BB173820063E521 /* main.c in Sources */,
 				9DF5440E1BB351680063E521 /* identifier.c in Sources */,
 				9DF544031BB182270063E521 /* treat_type.c in Sources */,
+				9DF544111BB5EB140063E521 /* treat_error.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
