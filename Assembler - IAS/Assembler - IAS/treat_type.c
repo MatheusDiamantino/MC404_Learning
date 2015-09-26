@@ -43,11 +43,16 @@ void _insert_memory_map(char *str) {
         word.right_argument = 0;
         word.right_instruction = 0;
     }
-    if(str != NULL)
-        instr_tree = insert_memory_map(instr_tree, memoryPosition, str);
-    else instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output(word.left_instruction,
-                                                                                  word.right_instruction, word.left_argument,
-                                                                                  word.right_argument));
+    if(str == NULL)
+        instr_tree = insert_memory_map(instr_tree, memoryPosition, format_output(word.left_instruction,
+                                                                                 word.right_instruction, word.left_argument,
+                                                                                 word.right_argument));
+    else instr_tree = insert_memory_map(instr_tree, memoryPosition, str);
+    
+    word.left_argument = -1;
+    word.left_instruction = -1;
+    word.right_instruction = -1;
+    word.right_argument = -1;
 }
 
 
@@ -111,8 +116,9 @@ void treat_directive(char input[]) {
         char            symbol[MAXROT];
         long long int   num;
         
-        read_input(symbol);
-        read_number_generic(&num);
+        if(!read_input(symbol)) _error_expected_argument(input);    // If argument is not specified
+        
+        if(!read_number_generic(&num)) _error_expected_argument(input); // If argument is not specified
         
         
         _error_bounds(0, pow(2.0, 31.0) - 1, num);          // Verifies if number is inside bound specified
@@ -129,7 +135,8 @@ void treat_directive(char input[]) {
         
         char        str[MAXROT];
         
-        read_input(str);
+        if(!read_input(str)) _error_expected_argument(input);   // If argument is not specified
+        
         label_tree *node = NULL;
         
         if(isLabel(str)) { str[strlen(str) - 1] = '\0'; node = Find(labels, str); }
@@ -137,11 +144,17 @@ void treat_directive(char input[]) {
         // Insert value in the tree if it's a label, symbol or number
         if(node != NULL) { _insert_memory_map(format_output_HEX(node -> memPos)); }
         else {
+                
             node = Find(sym, str);
             
-            if(node != NULL) _insert_memory_map(format_output_HEX(node -> memPos));
+            if(node != NULL)
+                _insert_memory_map(format_output_HEX(node -> memPos));
             
-            else _insert_memory_map(format_output_HEX(convert_string_number(str)));
+            
+            else {
+                if(!string_is_number(str)) _error_not_valid_SYM_or_label(str);
+                _insert_memory_map(format_output_HEX(convert_string_number(str)));
+            }
         }
         
         _increment(true);
@@ -158,15 +171,15 @@ void treat_directive(char input[]) {
        _error_word_on_right_instruction(input);         // Verifies if it's not requesting .word on right instruction
         
         
-        read_input(num);                                // Read input and tries to convert it to number
-        memory_used = convert_string_number(num);       //
+        if(!read_input(num)) _error_expected_argument(input);   // If argument is not specified
+        
+        memory_used = convert_string_number(num);       // Read input and tries to convert it to number
         
       
         _error_bounds(0, 1023, memory_used);            // Verifies if number given isn't out of bounds
         
         
-        read_input(num);                                // Read input again for the value to be stored
-        
+        if(!read_input(num)) _error_expected_argument(input);   // If argument is not specified
         
         
         // if input is label, take off the colon of the string
@@ -195,7 +208,8 @@ void treat_directive(char input[]) {
         long long int           multiple;                   // Multiple given to the .align directive
         char                    str[MAXROT];                // Input to be read
         
-        read_input(str);
+        if(!read_input(str)) _error_expected_argument(input);   // If argument is not specified
+        
         multiple = convert_string_number(str);
         
         
@@ -220,7 +234,7 @@ void treat_directive(char input[]) {
     } else if (!strcmp(input, ".org")) {
         long long int num;
         
-        read_number_generic(&num);
+        if(!read_number_generic(&num))_error_expected_argument(input); // If argument is not given
         
         _error_bounds(0, 1023, num);                // Verifies if number given isn't out of bounds
     
@@ -228,9 +242,9 @@ void treat_directive(char input[]) {
         if(instructionPos == RIGHT) {
             
             _insert_memory_map(NULL);   // Insert word in the memory map if there's no right instruction (fill it with 0's)
-            
+            _increment(false);
         }
-        memoryPosition = (int)num;
+        _change_position(num);
     }
 
 }
@@ -253,7 +267,7 @@ void treat_instruction(char input[]) {
             // If the instruction expect an argument
             if(instruction_list[i].expect_argument) {
                 
-                read_input(arg);
+                if(!read_input(arg)) _error_expected_argument(input);
                 label = Find(labels, arg);
                 
                 
@@ -261,8 +275,7 @@ void treat_instruction(char input[]) {
                 // Error when argument given is a word and isn't a label on the data base
                 
                if(!string_is_number(arg) && label == NULL) {
-                    fprintf(stderr, "ERROR on line %d\n %s is not a label \n", lineCounter, arg);
-                    exit(1);
+                   _error_not_valid_SYM_or_label(arg);
                 }
                 
                 

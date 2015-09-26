@@ -14,6 +14,12 @@
 
 #include "memory_map_BST.h"
 
+/* -----------------------------------------------
+ *
+ * Insert memory word inside tree
+ *
+ * -----------------------------------------------*/
+
 memory_map_tree * insert_memory_map(memory_map_tree *node,int memory_position, char *word)
 {
     int i = 0;
@@ -48,6 +54,12 @@ memory_map_tree * insert_memory_map(memory_map_tree *node,int memory_position, c
     
 }
 
+/* -----------------------------------------------
+ *
+ * Finds respective memory word for memory position given
+ *
+ * -----------------------------------------------*/
+
 memory_map_tree * find_memory_map(memory_map_tree *node, int memory_position)
 {
     if(node==NULL)
@@ -72,6 +84,13 @@ memory_map_tree * find_memory_map(memory_map_tree *node, int memory_position)
     }
 }
 
+
+/* -----------------------------------------------
+ *
+ * Prints the final memory map on stdout
+ *
+ * -----------------------------------------------*/
+
 void print_memory_map (memory_map_tree *node) {
     
     if(node != NULL) {
@@ -81,6 +100,13 @@ void print_memory_map (memory_map_tree *node) {
     }
     
 }
+
+
+/* -----------------------------------------------
+ *
+ * Prints the final memory map on File
+ *
+ * -----------------------------------------------*/
 
 void print_memory_map_FILE (memory_map_tree *node, FILE* f) {
     

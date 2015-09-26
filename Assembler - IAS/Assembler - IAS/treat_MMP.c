@@ -15,6 +15,12 @@
 extern short int memoryPosition;
 extern short int instructionPos;
 
+/* -----------------------------------------------
+ *
+ * Deals with changing memory position
+ *
+ * -----------------------------------------------*/
+
 void _increment(bool is_word) {
     
     if(!is_word) {

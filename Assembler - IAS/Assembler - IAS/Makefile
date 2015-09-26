@@ -49,7 +49,7 @@ memory_map_BST.o: memory_map_BST.c memory_map_BST.h
 	gcc -c -g memory_map_BST.c -o memory_map_BST.o
 
 # —- identifier.o
-identifier.o: identifier.c identifier.h typeEnum.h readInput.h labelBST.h instruction.h treat_type.h treat_MMP.h
+identifier.o: identifier.c identifier.h typeEnum.h readInput.h labelBST.h instruction.h treat_type.h treat_MMP.h treat_error.h
 	gcc -c -g identifier.c -o identifier.o
 
 # —- treat_error.o

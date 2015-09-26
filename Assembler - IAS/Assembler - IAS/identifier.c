@@ -18,6 +18,7 @@
 #include "instruction.h"
 #include "treat_type.h"
 #include "treat_MMP.h"
+#include "treat_error.h"
 
 extern inputType        type;
 extern                  label_tree *labels;
@@ -26,18 +27,12 @@ extern short int        instructionPos;
 extern int              lineCounter;
 extern instruction      instruction_list[20];
 
-bool containsChar (char input[], char c) {
-    int i;
-    unsigned long int size_str = strlen(input);
-    
-    for(i = 0; i < size_str; i ++) {
-        if(input[i] == c) {
-            return true;
-        }
-    }
-    
-    return false;
-}
+
+/* --------------------------------------------------------------------
+ *
+ * Verifies if given string is a valid instruction
+ *
+ * ------------------------------------------------------------------- */
 
 bool isInstruction(char input[]) {
     int i = 0;
@@ -47,18 +42,18 @@ bool isInstruction(char input[]) {
             return true;
     }
     
-    /***********************************/
-    // Error treatment
-    
-    fprintf(stderr, "ERROR on line %d\n%s is not a valid instruction!\n", lineCounter, input);
-    exit(1);
-    
-    /***********************************/
+
+    _error_instruction_not_found(input);        // If it's not a valid instruction
     
     return false;
 }
 
-/* Checks if the input is a label */
+/* --------------------------------------------------------------------
+ *
+ * Verifies if given string is a valid Label
+ *
+ * ------------------------------------------------------------------- */
+
 bool isLabel (char input[]) {
     int i;
     unsigned long int size_str = strlen(input);
@@ -68,15 +63,13 @@ bool isLabel (char input[]) {
     if(input[size_str - 1] == ':') {
         // Checks if it starts with a number
         if(input[0] >= '0' && input[0] <= '9') {
-            fprintf(stderr, "ERROR on line %d\n%s is not a valid label", lineCounter, input);
-            exit(1);
+            _error_not_valid_SYM_or_label(input);
         }
         
         // Checks if there's a colon in the middle of the input
         for(i = 0; i < size_str; i ++) {
             if(input[i] == ':' && i != size_str - 1) {
-                fprintf(stderr, "ERROR on line %d\n%s is not a valid label", lineCounter, input);
-                exit(1);
+                _error_not_valid_SYM_or_label(input);
             }
         }
         
@@ -86,15 +79,31 @@ bool isLabel (char input[]) {
     return false;
 }
 
-/* Checks if input is a Directive */
+/* --------------------------------------------------------------------
+ *
+ * Verifies if given string is a Directive
+ *
+ * ------------------------------------------------------------------- */
+
 bool isDirective (char input[]) {
     return input[0] == '.';
 }
 
-/* checks if input is a Comment */
+/* --------------------------------------------------------------------
+ *
+ * Verifies if given string is a Comment
+ *
+ * ------------------------------------------------------------------- */
+
 bool isComment (char input[]) {
     return input[0] == '#';
 }
+
+/* --------------------------------------------------------------------
+ *
+ * Identify tipe of the input given
+ *
+ * ------------------------------------------------------------------- */
 
 inputType identifyType (char input[]) {
     
@@ -113,7 +122,13 @@ inputType identifyType (char input[]) {
     
 }
 
-void reader(char input[]) {
+/* --------------------------------------------------------------------
+ *
+ * With string given, treats the identified input
+ *
+ * ------------------------------------------------------------------- */
+
+void main_process(char input[]) {
     inputType t;
     
     t =  identifyType(input);
@@ -139,18 +154,25 @@ void reader(char input[]) {
     }
     
 }
+
+/* --------------------------------------------------------------------
+ *
+ * Pre - process Cicle
+ *
+ * ------------------------------------------------------------------- */
+
 void pre_process(char input[]) {
     inputType t = identifyType(input);
-    switch (t) {
+    switch (t) {                        // Does the basic operations in order to compute the labels in the pre process cicle
         case DIRECTIVE:
             
             if(!strcmp(input, ".word")) memoryPosition++;
-            if(!strcmp(input, ".wfill")) {
+            else if(!strcmp(input, ".wfill")) {
                 long long int n;
                 read_number_generic(&n);
                 memoryPosition += n;
             }
-            if(!strcmp(input, ".align")) {
+            else if(!strcmp(input, ".align")) {
                 long long int n;
                 read_number_generic(&n);
                 
@@ -162,10 +184,10 @@ void pre_process(char input[]) {
                     while(memoryPosition % n) { _increment(true); }
                 }
             }
-            if(!strcmp(input, ".org")) {
+            else if(!strcmp(input, ".org")) {
                 long long int n;
                 read_number_generic(&n);
-                memoryPosition = n;
+                _change_position(n);
             }
             read_junk();
             break;
@@ -186,6 +208,13 @@ void pre_process(char input[]) {
             break;
     }
 }
+
+
+/* --------------------------------------------------------------------
+ *
+ * Verifies if the order of the inputs in the same line is in the correct order
+ *
+ * ------------------------------------------------------------------- */
 
 void verify_order(inputType t) {
     

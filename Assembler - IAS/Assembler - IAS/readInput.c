@@ -32,9 +32,10 @@ void read_junk() {
 bool read_input(char input[]) {
     char *str = strtok(NULL, " \t\n\"");
     
-    _error_not_10_digit_HEX_number(str);        // In case input is a HEX not valid
+    
     
     if(str != NULL) {
+        _error_not_10_digit_HEX_number(str);        // In case input is a HEX not valid
         strcpy(input, str);
         return true;
     }

@@ -20,5 +20,7 @@ void _error_no_argument_instruction(char *instruction, bool has_argument, bool i
 void _error_word_on_right_instruction(char *instruction);
 void _error_not_10_digit_HEX_number(char *number);
 void _error_not_valid_number(char *number);
+void _error_not_valid_SYM_or_label(char *sym);
+void _error_expected_argument(char *instr);
 
 #endif /* treat_error_h */
